@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { environment } from '@/config/environment'
 import { storage } from '@/services/storage/localStorage'
-import { localAdapter } from '@/services/local/localData'
+import { localAdapter, LOCAL_TOKEN } from '@/services/local/localData'
 
 let onUnauthorized = () => {}
 
@@ -19,7 +19,10 @@ export const apiClient = axios.create({
 })
 
 apiClient.interceptors.request.use((config) => {
-  const token = storage.getToken()
+  const sessionToken = storage.getToken()
+  const token = environment.useLocalData
+    ? sessionToken ? LOCAL_TOKEN : null
+    : sessionToken
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }

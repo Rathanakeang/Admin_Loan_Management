@@ -7,6 +7,7 @@ import UserTable from '@/features/users/components/UserTable'
 import { useUsers } from '@/features/users/hooks/useUsers'
 import { useAuth } from '@/features/auth/hooks/useAuth'
 import { getErrorMessage } from '@/services/api/apiClient'
+import { isFirebaseConfigured } from '@/services/firebase/firebase'
 import { PERMISSIONS } from '@/utils/permissions'
 
 export default function UserList() {
@@ -15,9 +16,9 @@ export default function UserList() {
   return (
     <div>
       <PageToolbar
-        title="Staff users"
-        description="Administrator accounts. These are not customers."
-        actions={hasPermission(PERMISSIONS.USER_MANAGE) ? (
+        title={isFirebaseConfigured ? 'Users' : 'Staff users'}
+        description={isFirebaseConfigured ? 'Accounts from the Firestore users collection.' : 'Administrator accounts. These are not customers.'}
+        actions={!isFirebaseConfigured && hasPermission(PERMISSIONS.USER_MANAGE) ? (
           <LinkButton to="/users/new">New user</LinkButton>
         ) : null}
       />

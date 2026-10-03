@@ -64,5 +64,8 @@ export const ROLE_PERMISSIONS = {
 export function resolvePermissions(user) {
   if (!user) return []
   if (Array.isArray(user.permissions) && user.permissions.length > 0) return user.permissions
-  return ROLE_PERMISSIONS[user.role] || []
+  const role = typeof user.role === 'string'
+    ? user.role.trim().toUpperCase().replace(/[\s-]+/g, '_')
+    : ''
+  return ROLE_PERMISSIONS[role] || []
 }

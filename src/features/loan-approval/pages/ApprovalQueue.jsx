@@ -24,7 +24,7 @@ export default function ApprovalQueue() {
           loading={queue.isLoading}
           dataSource={queue.items}
           columns={[
-            { title: 'Applicant', dataIndex: 'customerName', render: (value, record) => value || record.name },
+            { title: 'Applicant', dataIndex: 'customerName', render: (value, record) => value || record.fullName || record.name },
             { title: 'Amount', dataIndex: 'amount', align: 'right', render: (value) => <Money value={value} /> },
             { title: 'Duration', dataIndex: 'termMonths', render: (value) => (value ? `${value} months` : '—') },
             { title: 'Submitted date', dataIndex: 'createdAt', render: (value) => formatDate(value) },

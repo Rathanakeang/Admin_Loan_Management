@@ -8,6 +8,7 @@ import { useAuth } from '@/features/auth/hooks/useAuth'
 import { getErrorMessage } from '@/services/api/apiClient'
 import { applyYupErrors, loginSchema } from '@/utils/validation'
 import { environment } from '@/config/environment'
+import { isFirebaseConfigured } from '@/services/firebase/firebase'
 
 export default function LoginForm() {
   const [form] = Form.useForm()
@@ -39,8 +40,8 @@ export default function LoginForm() {
   return (
     <AuthShell
       title={environment.appName}
-      subtitle="Browser-only administration console"
-      note="This copy keeps records in the browser."
+      subtitle={isFirebaseConfigured ? 'Sign in with your Firebase Authentication account' : 'Browser-only administration console'}
+      note={isFirebaseConfigured ? 'Your profile is loaded from the Firestore users collection.' : 'This copy keeps records in the browser.'}
       footer={<Link to="/forgot-password" className="font-medium text-brand hover:underline">Forgot password</Link>}
     >
       <Form
@@ -48,7 +49,7 @@ export default function LoginForm() {
         layout="vertical"
         onFinish={onFinish}
         requiredMark={false}
-        initialValues={{ email: 'admin@loan.local', password: 'Admin@123' }}
+        initialValues={isFirebaseConfigured ? undefined : { email: 'admin@loan.local', password: 'Admin@123' }}
       >
         <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Email is required' }]}>
           <Input type="email" autoComplete="username" placeholder="admin@loan.local" />
@@ -60,7 +61,7 @@ export default function LoginForm() {
           Sign in
         </Button>
       </Form>
-      <p className="mt-3 mb-0 text-xs text-subtle">Demo: admin@loan.local · Admin@123</p>
+      {!isFirebaseConfigured && <p className="mt-3 mb-0 text-xs text-subtle">Demo: admin@loan.local · Admin@123</p>}
     </AuthShell>
   )
 }

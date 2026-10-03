@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 
 const STORAGE_KEY = 'lms.frontendData'
 const VERSION = 1
-const LOCAL_TOKEN = 'local-admin-session'
+export const LOCAL_TOKEN = 'local-admin-session'
 
 function monthSeries(records, dateField, valueField) {
   const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']

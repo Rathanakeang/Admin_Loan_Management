@@ -11,7 +11,11 @@ npm install
 npm run dev
 ```
 
-Copy `.env.example` to `.env` when a backend exists. Until then the app does not call an API. Set `VITE_USE_API=true` only after the database API is ready.
+Copy `.env.example` to `.env` and add the Firebase Web App settings to connect Firebase. The Firebase client exports Firestore and Realtime Database from `src/services/firebase/firebase.js`. Existing app data continues to use browser storage until its services are migrated. Set `VITE_USE_API=true` only after the REST API is ready.
+
+Never add Firebase service-account credentials to this browser app. Protect database access with Firebase Security Rules.
+
+Firebase login uses Firebase Authentication, then loads the matching profile by email from the Firestore `users` collection. Firestore `password` fields are never used; create each sign-in account in Firebase Authentication. The Users page reads profiles from Firestore when Firebase is configured.
 
 ## Layout
 

@@ -1,4 +1,4 @@
-import { Form, InputNumber } from 'antd'
+import { Form } from 'antd'
 import Button from '@/components/common/Button/Button'
 import Input from '@/components/common/Input/Input'
 
@@ -34,9 +34,6 @@ export default function ApprovalForm({ onSubmit, submitting }) {
     <Form form={form} layout="vertical" onFinish={onSubmit} initialValues={{ decision: 'APPROVED' }} className="max-w-xl">
       <Form.Item label="Decision" name="decision" rules={[{ required: true, message: 'Choose a decision' }]}>
         <DecisionChoice />
-      </Form.Item>
-      <Form.Item label="Approved amount" name="approvedAmount">
-        <InputNumber min={0} className="w-full" />
       </Form.Item>
       <Form.Item label="Comment" name="comment" rules={[{ required: true, message: 'A comment is required' }]}>
         <Input.TextArea rows={4} />
